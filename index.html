@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Stone, Paper, Scissors Garden</title>
+    <meta name="description" content="A beautiful and responsive cottagecore-themed Stone, Paper, Scissors game with animations, built for recruiters and investors.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sound Toggle Button in Top Corner -->
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle Sound">
+        <svg class="sound-icon sound-on" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
+        </svg>
+        <svg class="sound-icon sound-off hidden" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12,4L9.91,6.09L12,8.18V4M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.76C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73L4.27,3M19,12C19,12.78 18.87,13.5 18.66,14.21L20.2,15.75C20.7,14.6 21,13.33 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,11.08 16.12,10.25 15.54,9.65L17.03,8.16C18,9.15 18.5,10.5 18.5,12C18.5,13.42 18,14.77 17.03,15.75L15.54,14.26C16.12,13.66 16.5,12.83 16.5,12Z" />
+        </svg>
+    </button>
+
+    <!-- Falling Petals Background Container -->
+    <div class="petal-container" id="petalContainer"></div>
+
+    <main class="game-container">
+        <!-- Main Game Title -->
+        <h1 class="game-title">Magical Stone, Paper, Scissors Garden.</h1>
+
+        <!-- Scoreboard Parchment Scroll -->
+        <div class="scoreboard-scroll" id="scoreboardScroll">
+            <div class="scroll-edge scroll-left"></div>
+            <div class="scroll-body">
+                <div class="score-container">
+                    <div class="score-card player-score-card">
+                        <span class="score-label">YOUR WINS:</span>
+                        <div class="score-value-container">
+                            <!-- Rose icon -->
+                            <svg class="score-icon rose-icon" viewBox="0 0 24 24" width="28" height="28">
+                                <path fill="#e5b3b3" d="M12,2C10,2 8,3.5 8,5.5C8,6.8 9,8 10,8.5C7.5,8.5 5,10.5 5,13C5,15.5 7,17.5 9.5,17.5C10.5,17.5 11.5,17 12,16.2C12.5,17 13.5,17.5 14.5,17.5C17,17.5 19,15.5 19,13C19,10.5 16.5,8.5 14,8.5C15,8 16,6.8 16,5.5C16,3.5 14,2 12,2M12,4C13,4 14,4.7 14,5.5C14,6.3 13,7.5 12,8C11,7.5 10,6.3 10,5.5C10,4.7 11,4 12,4M9.5,10.5C12,10.5 13.5,11.5 13.5,13C13.5,14 12.8,15.5 12,15.5C11.2,15.5 10.5,14 10.5,13C10.5,11.5 12,10.5 9.5,10.5Z"/>
+                                <path fill="#8da88f" d="M12,16V22H10V18H12" />
+                            </svg>
+                            <span class="score-val" id="playerScore">0</span>
+                        </div>
+                    </div>
+                    <div class="score-divider"></div>
+                    <div class="score-card computer-score-card">
+                        <span class="score-label">GARDEN WINS:</span>
+                        <div class="score-value-container">
+                            <!-- Tulip icon -->
+                            <svg class="score-icon tulip-icon" viewBox="0 0 24 24" width="28" height="28">
+                                <path fill="#f3d17c" d="M12,2C11.5,2 11,2.5 10.5,3C9.5,4 8,6 8,8C8,10.5 9.5,12 12,13C14.5,12 16,10.5 16,8C16,6 14.5,4 13.5,3C13,2.5 12.5,2 12,2M12,4C12.5,5 13.5,6.5 13.5,8C13.5,9.2 12.8,10.5 12,11C11.2,10.5 10.5,9.2 10.5,8C10.5,6.5 11.5,5 12,4Z"/>
+                                <path fill="#8da88f" d="M12,13V22H14V17H12" />
+                            </svg>
+                            <span class="score-val" id="computerScore">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-edge scroll-right"></div>
+        </div>
+
+        <!-- Choice Cards Section -->
+        <section class="cards-section" aria-label="Choose your move">
+            <!-- STONE CARD -->
+            <button class="choice-card card-stone" id="cardStone" data-choice="stone">
+                <div class="card-border"></div>
+                <div class="card-leaf-corner tl"></div>
+                <div class="card-leaf-corner tr"></div>
+                <div class="card-leaf-corner bl"></div>
+                <div class="card-leaf-corner br"></div>
+                <div class="card-image-wrapper">
+                    <img src="assets/stone.png" alt="Cute Stone illustration" class="card-illustration">
+                </div>
+                <div class="card-title">STONE</div>
+            </button>
+
+            <!-- PAPER CARD -->
+            <button class="choice-card card-paper" id="cardPaper" data-choice="paper">
+                <div class="card-border"></div>
+                <div class="card-leaf-corner tl"></div>
+                <div class="card-leaf-corner tr"></div>
+                <div class="card-leaf-corner bl"></div>
+                <div class="card-leaf-corner br"></div>
+                <div class="card-image-wrapper">
+                    <img src="assets/paper.png" alt="Magical Paper illustration" class="card-illustration">
+                </div>
+                <div class="card-title">PAPER</div>
+            </button>
+
+            <!-- SCISSORS CARD -->
+            <button class="choice-card card-scissors" id="cardScissors" data-choice="scissors">
+                <div class="card-border"></div>
+                <div class="card-leaf-corner tl"></div>
+                <div class="card-leaf-corner tr"></div>
+                <div class="card-leaf-corner bl"></div>
+                <div class="card-leaf-corner br"></div>
+                <div class="card-image-wrapper">
+                    <img src="assets/scissors.png" alt="Vintage Scissors illustration" class="card-illustration">
+                </div>
+                <div class="card-title">SCISSORS</div>
+            </button>
+        </section>
+
+        <!-- Battle / Result Arena -->
+        <section class="battle-section">
+            <!-- Computer Choice Card (Flippable) -->
+            <div class="computer-card-wrapper">
+                <div class="computer-card" id="computerCard">
+                    <!-- Front of card (revealed choice) -->
+                    <div class="computer-card-side card-front">
+                        <div class="card-border"></div>
+                        <div class="card-leaf-corner tl"></div>
+                        <div class="card-leaf-corner tr"></div>
+                        <div class="card-leaf-corner bl"></div>
+                        <div class="card-leaf-corner br"></div>
+                        <div class="card-image-wrapper">
+                            <img src="assets/stone.png" alt="Computer choice" id="computerIllustration" class="card-illustration">
+                        </div>
+                        <div class="card-title" id="computerTitle">STONE</div>
+                    </div>
+                    
+                    <!-- Back of card (face down mystery card with sleeping kitten) -->
+                    <div class="computer-card-side card-back">
+                        <div class="card-border"></div>
+                        <div class="card-leaf-corner tl"></div>
+                        <div class="card-leaf-corner tr"></div>
+                        <div class="card-leaf-corner bl"></div>
+                        <div class="card-leaf-corner br"></div>
+                        <div class="card-question-mark">?</div>
+                        <img src="assets/sleeping_kitten.png" alt="Sleeping Cat" class="sleeping-cat-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Wreath Box -->
+            <div class="result-wreath-container">
+                <svg class="wreath-svg" viewBox="0 0 200 200" width="180" height="180">
+                    <!-- Left branch -->
+                    <path class="wreath-branch" d="M100,180 C60,180 30,140 30,100 C30,60 60,20 100,20" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" />
+                    <!-- Right branch -->
+                    <path class="wreath-branch" d="M100,180 C140,180 170,140 170,100 C170,60 140,20 100,20" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" />
+                    
+                    <!-- Leaf items - Left -->
+                    <path class="wreath-leaf" d="M30,100 L20,92 C23,87 28,90 30,100 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M35,75 L25,65 C30,62 34,67 35,75 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M50,50 L40,38 C46,37 49,43 50,50 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M72,30 L65,16 C71,17 73,24 72,30 Z" fill="#8da88f" />
+
+                    <!-- Leaf items - Right -->
+                    <path class="wreath-leaf" d="M170,100 L180,92 C177,87 172,90 170,100 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M165,75 L175,65 C170,62 166,67 165,75 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M150,50 L160,38 C154,37 151,43 150,50 Z" fill="#8da88f" />
+                    <path class="wreath-leaf" d="M128,30 L135,16 C129,17 127,24 128,30 Z" fill="#8da88f" />
+
+                    <!-- Flower details -->
+                    <circle cx="30" cy="100" r="4" fill="#e5b3b3" stroke="#d4af37" stroke-width="1" />
+                    <circle cx="170" cy="100" r="4" fill="#e5b3b3" stroke="#d4af37" stroke-width="1" />
+                    <circle cx="50" cy="50" r="4" fill="#f3d17c" stroke="#d4af37" stroke-width="1" />
+                    <circle cx="150" cy="50" r="4" fill="#f3d17c" stroke="#d4af37" stroke-width="1" />
+                    <circle cx="100" cy="20" r="5" fill="#e5b3b3" stroke="#d4af37" stroke-width="1" />
+                </svg>
+                <div class="result-text-box">
+                    <div class="result-text" id="resultText">RESULT</div>
+                </div>
+            </div>
+
+            <!-- Reset Button Plaque -->
+            <div class="reset-button-wrapper">
+                <button class="reset-button" id="resetButton" aria-label="Reset Game Score">
+                    <span class="screw tl"></span>
+                    <span class="screw tr"></span>
+                    <span class="screw bl"></span>
+                    <span class="screw br"></span>
+                    <span class="reset-text">RESET GAME</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Copyright -->
+    <footer class="game-footer">
+        DESIGN AND IDEA BY: AFZAL EHSAN | ALL RIGHTS RESERVED BY AFZAL EHSAN
+    </footer>
+
+    <!-- Game Script -->
+    <script src="script.js"></script>
+</body>
+</html>
